@@ -2,6 +2,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pickle
+import numpy as np
 #Initialize the flask App
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/": {"origins": ""}})
@@ -21,10 +22,7 @@ model = pickle.load(open('model.pkl', 'rb'))
 #default page of our web-app
 @app.route('/')
 def home():
-    pred = model.predict([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]])
-    print(pred[0] , " ------------------------ H ----------------", type(pred[0]))
-    p = pred[0]
-    return int(p)
+    return model.predict([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]])[0].item()
 #     return render_template('index.html')
 
 #To use the predict button in our web-app
@@ -51,7 +49,7 @@ def predict():
                 int(data["ParentAnsweringSurvey"]),
                 int(data["ParentschoolSatisfaction"]),
                 int(data["StudentAbsenceDays"])
-            ]])[0]
+            ]])[0].item()
             })
 
 
