@@ -30,7 +30,7 @@ def home():
 def predict():
     if request.method == "POST":
         data = request.get_json()
-        return jsonify({'success': True})
+        return jsonify({'success': data})
 #         return jsonify({
 #             'success': True,
 #             'data': model.predit([
