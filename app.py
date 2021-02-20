@@ -48,8 +48,8 @@ def predict():
                 data["Discussion"],
                 data["ParentAnsweringSurvey"],
                 data["ParentschoolSatisfaction"],
-                data["StudentAbsenceDays"],
-                ]]),
+                data["StudentAbsenceDays"]
+                ]])
             })
 
 
