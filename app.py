@@ -31,7 +31,7 @@ def predict():
     if request.method == "POST":
         data = request.get_json()
         return jsonify({'success': data})
-#         return jsonify({
+#         return jsonify({ 
 #             'success': True,
 #             'data': model.predit([
 #                 data["gender"],
