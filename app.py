@@ -32,7 +32,7 @@ def predict():
         data = request.get_json()
         return jsonify({ 
             'success': True,
-            'data': model.predit([[
+            'data': model.predict([[
                 data["gender"],
                 data["Nationalty"],
                 data["place_of_birth"],
