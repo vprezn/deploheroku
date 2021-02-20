@@ -31,7 +31,24 @@ def predict():
         data = request.get_json()
         return jsonify({ 
             'success': True,
-            'data': data
+            'data': model.predict([[
+                int(data["gender"]),
+                int(data["Nationalty"]),
+                int(data["place_of_birth"]),
+                int(data["stage"]),
+                int(data["grade"]),
+                int(data["section"]),
+                int(data["topic"]),
+                int(data["semester"]),
+                int(data["relation"]),
+                int(data["raisedhands"]),
+                int(data["visted_resource"]),
+                int(data["AnnouncementsView"]),
+                int(data["Discussion"]),
+                int(data["ParentAnsweringSurvey"]),
+                int(data["ParentschoolSatisfaction"]),
+                int(data["StudentAbsenceDays"])
+            ]])
             })
 
 
