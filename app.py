@@ -24,7 +24,7 @@ def home():
     pred = model.predict([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]])
     print(pred[0] , " ------------------------ H ----------------", type(pred[0]))
     p = pred[0]
-    return p
+    return int(p)
 #     return render_template('index.html')
 
 #To use the predict button in our web-app
