@@ -23,8 +23,7 @@ model = pickle.load(open('model.pkl', 'rb'))
 @app.route('/')
 def home():
     pred = model.predict([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]])
-    print(pred[0])
-    return "a"
+    return pred[0]
 #     return render_template('index.html')
 
 #To use the predict button in our web-app
@@ -51,7 +50,7 @@ def predict():
                 int(data["ParentAnsweringSurvey"]),
                 int(data["ParentschoolSatisfaction"]),
                 int(data["StudentAbsenceDays"])
-            ]])
+            ]])[0]
             })
 
 
