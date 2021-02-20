@@ -6,19 +6,18 @@ import pickle
 
 #Initialize the flask App
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
-
 cors = CORS(app, resources={r"/api/": {"origins": ""}})
 
 # CORS Headers
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Headers',
-                             'Content-Type,Authorization,true')
-    response.headers.add('Access-Control-Allow-Methods',
-                             'GET,PUT,POST,DELETE,OPTIONS')
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    header['Access-Control-Allow-Methods'] = 'OPTIONS, HEAD, GET, POST, DELETE, PUT'
     return response
 
+model = pickle.load(open('model.pkl', 'rb'))
 
 
 #default page of our web-app
