@@ -22,7 +22,8 @@ model = pickle.load(open('model.pkl', 'rb'))
 #default page of our web-app
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return model.predict([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]])
+#     return render_template('index.html')
 
 #To use the predict button in our web-app
 @app.route('/student_performance_prediction',methods=['GET','POST'])
