@@ -13,18 +13,35 @@ def home():
     return render_template('index.html')
 
 #To use the predict button in our web-app
-@app.route('/predict',methods=['POST'])
+@app.route('/student_performance_prediction',methods=['POST'])
 def predict():
     '''
     For rendering results on HTML GUI
     '''
-    int_features = [float(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
 
-    output = round(prediction[0], 2)
+    data = request.get_json()
+    return jsonify({
+                'success': True,
+                'data': model.predit([
+                            data["gender"],
+                            data["Nationalty"],
+                            data["place_of_birth"],
+                            data["stage"],
+                            data["grade"],
+                            data["section"],
+                            data["topic"],
+                            data["semester"],
+                            data["relation"],
+                            data["raisedhands"],
+                            data["visted_resource"],
+                            data["AnnouncementsView"],
+                            data["Discussion"],
+                            data["ParentAnsweringSurvey"],
+                            data["ParentschoolSatisfaction"],
+                            data["StudentAbsenceDays"],
+                        ]),
+            })
 
-    return render_template('index.html', prediction_text='CO2 Emission of the vehicle is :{}'.format(output))
 
 if __name__ == "__main__":
     app.run(debug=True)
