@@ -2,7 +2,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pickle
-from sklearn.linear_model import LogisticRegression
 #Initialize the flask App
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/": {"origins": ""}})
@@ -23,8 +22,9 @@ model = pickle.load(open('model.pkl', 'rb'))
 @app.route('/')
 def home():
     pred = model.predict([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]])
-    print(pred[0] , " ------------------------ H")
-    return "A"
+    print(pred[0] , " ------------------------ H ----------------", type(pred[0]))
+    p = pred[0]
+    return p
 #     return render_template('index.html')
 
 #To use the predict button in our web-app
