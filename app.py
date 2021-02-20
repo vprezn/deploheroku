@@ -8,6 +8,7 @@ import pickle
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
 
+cors = CORS(app, resources={r"/api/": {"origins": ""}})
 
 # CORS Headers
 @app.after_request
