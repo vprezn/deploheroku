@@ -15,10 +15,6 @@ def home():
 #To use the predict button in our web-app
 @app.route('/student_performance_prediction')
 def predict():
-    '''
-    For rendering results on HTML GUI
-    '''
-
     data = request.get_json()
     return jsonify({
                 'success': True,
