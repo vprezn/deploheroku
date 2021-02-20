@@ -29,8 +29,8 @@ def home():
 @app.route('/student_performance_prediction',methods=['GET','POST'])
 def predict():
     if request.method == "POST":
+        data = request.get_json()
         return jsonify({'success': True})
-#         data = request.get_json()
 #         return jsonify({
 #             'success': True,
 #             'data': model.predit([
