@@ -22,8 +22,7 @@ model = pickle.load(open('model.pkl', 'rb'))
 #default page of our web-app
 @app.route('/')
 def home():
-    return '{}'.format(model.predict([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]])[0].item())
-#     return render_template('index.html')
+    return render_template('index.html')
 
 #To use the predict button in our web-app
 @app.route('/student_performance_prediction',methods=['GET','POST'])
@@ -32,7 +31,7 @@ def predict():
         data = request.get_json()
         return jsonify({ 
             'success': True,
-            'data': model.predict([[
+            'data': '{}'.format(model.predict([[
                 int(data["gender"]),
                 int(data["Nationalty"]),
                 int(data["place_of_birth"]),
@@ -49,7 +48,7 @@ def predict():
                 int(data["ParentAnsweringSurvey"]),
                 int(data["ParentschoolSatisfaction"]),
                 int(data["StudentAbsenceDays"])
-            ]])[0].item()
+            ]])[0].item())
             })
 
 
