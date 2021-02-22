@@ -64,11 +64,11 @@ def predict_land():
         0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
         0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
         0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        pred[data['MainLocation']] = 1.0
-        pred[data['SubLocation']] = 1.0
-        pred[data['Neighborhood']] = 1.0
-        pred[data['frontage']] = 1.0
-        pred[data['purpose']] = 1.0
+        pred[int(data['MainLocation'])] = 1.0
+        pred[int(data['SubLocation'])] = 1.0
+        pred[int(data['Neighborhood'])] = 1.0
+        pred[int(data['frontage'])] = 1.0
+        pred[int(data['purpose'])] = 1.0
         return jsonify({ 
             'success': True,
             'data': '{}'.format(land_price_prediction_ridge_model.predict([pred])[0].item())
