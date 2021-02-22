@@ -6,7 +6,7 @@ import numpy as np
 #Initialize the flask App
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/": {"origins": ""}})
-
+ 
 # CORS Headers
 @app.after_request
 def after_request(response):
