@@ -16,7 +16,7 @@ def after_request(response):
     header['Access-Control-Allow-Methods'] = 'OPTIONS, HEAD, GET, POST, DELETE, PUT'
     return response
 
-model = pickle.load(open('model.pkl', 'rb'))
+student_performance_logistic_model = pickle.load(open('student_performance_logistic_model.pkl', 'rb'))
 
 
 #default page of our web-app
@@ -31,7 +31,7 @@ def predict():
         data = request.get_json()
         return jsonify({ 
             'success': True,
-            'data': '{}'.format(model.predict([[
+            'data': '{}'.format(student_performance_logistic_model.predict([[
                 int(data["gender"]),
                 int(data["Nationalty"]),
                 int(data["place_of_birth"]),
