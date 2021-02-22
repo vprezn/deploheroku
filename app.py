@@ -17,6 +17,7 @@ def after_request(response):
     return response
 
 student_performance_logistic_model = pickle.load(open('student_performance_logistic_model.pkl', 'rb'))
+land_price_prediction_ridge_model = pickle.load(open('land_price_prediction_ridge_model.pkl', 'rb'))
 
 
 #default page of our web-app
@@ -49,6 +50,28 @@ def predict():
                 int(data["ParentschoolSatisfaction"]),
                 int(data["StudentAbsenceDays"])
             ]])[0].item())
+            })
+
+
+@app.route('/land_prices_prediction',methods=['GET','POST'])
+def predict_land():
+    if request.method == "POST":
+        data = request.get_json()
+        pred = [int(data['streetwidth']),int(data['size']),0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+        ,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+        0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+        pred[data['MainLocation']] = 1.0
+        pred[data['SubLocation']] = 1.0
+        pred[data['Neighborhood']] = 1.0
+        pred[data['frontage']] = 1.0
+        pred[data['purpose']] = 1.0
+        return jsonify({ 
+            'success': True,
+            'data': '{}'.format(land_price_prediction_ridge_model.predict([pred])[0].item())
             })
 
 
