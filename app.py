@@ -106,7 +106,7 @@ def predict_land():
 @app.route('/flower_prediction',methods=['GET','POST'])
 def predict_flower():
     if request.method == "POST":
-        data = request.get_json()
+        data = request.files['file']
         model_name = "flower_twnsorflow.h5"
         image_path = data['image']
         model = tf.keras.models.load_model(model_name ,custom_objects={'KerasLayer':hub.KerasLayer} )
