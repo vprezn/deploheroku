@@ -108,7 +108,8 @@ def predict_flower():
     if request.method == "POST":
         data = request.files['file']
         model_name = "flower_twnsorflow.h5"
-        image_path = data['image']
+        image_path = data
+        return jsonify({ 'success': True,'data': data})
         model = tf.keras.models.load_model(model_name ,custom_objects={'KerasLayer':hub.KerasLayer} )
         top_k = 3
         probs, classes = predict_flower_image(image_path, model, top_k)
