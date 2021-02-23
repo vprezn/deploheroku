@@ -106,7 +106,7 @@ def predict_land():
 @app.route('/flower_prediction',methods=['GET','POST'])
 def predict_flower():
     if request.method == "POST":
-        return jsonify({ 'success': True,'data': 'fq'})
+        return "a"
         data = request.files['file']
         model_name = "flower_twnsorflow.h5"
         image_path = data
