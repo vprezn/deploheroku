@@ -8,16 +8,17 @@ import tensorflow_hub as hub
 from PIL import Image
 #Initialize the flask App
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/": {"origins": ""}})
+# cors = CORS(app, resources={r"/api/": {"origins": ""}})
+cors = CORS(app)
  
 # CORS Headers
-@app.after_request
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    header['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-    header['Access-Control-Allow-Methods'] = 'OPTIONS, HEAD, GET, POST, DELETE, PUT'
-    return response
+# @app.after_request
+# def after_request(response):
+#     header = response.headers
+#     header['Access-Control-Allow-Origin'] = '*'
+#     header['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+#     header['Access-Control-Allow-Methods'] = 'OPTIONS, HEAD, GET, POST, DELETE, PUT'
+#     return response
 
 student_performance_logistic_model = pickle.load(open('student_performance_logistic_model.pkl', 'rb'))
 land_price_prediction_ridge_model = pickle.load(open('land_price_prediction_ridge_model.pkl', 'rb'))
@@ -103,16 +104,17 @@ def predict_land():
             'data': '{}'.format(land_price_prediction_ridge_model.predict([pred])[0].item())
             })
 
-@app.route('/flower_prediction',methods=['GET','POST'])
+@app.route('/flower_prediction',methods=['POST'])
 def predict_flower():
     if request.method == "POST":
-        data = request.files['file']
+        im = Image.open(request.files.get('file'))
         model_name = "flower_twnsorflow.h5"
-        image_path = data
+        image_path = im
         model = tf.keras.models.load_model(model_name ,custom_objects={'KerasLayer':hub.KerasLayer} )
         top_k = 3
+        print("Loaded")
         probs, classes = predict_flower_image(image_path, model, top_k)
-        return jsonify({ 'success': True,'data': [probs.classes]})
+        return jsonify({ 'success': True,'data': [probs,classes]})
             
     return jsonify({'success': True,'data': False})
 
@@ -125,8 +127,8 @@ def process_image(img):
     return tf_img
 
 
-def predict_flower_image(image_path,model,top_k = 5):
-    img     = np.asarray(Image.open(image_path))
+def predict_flower_image(image_path,model,top_k = 3):
+    img     = np.asarray(image_path)
     pro_img = process_image(img)
     expanded_img = model.predict(np.expand_dims(pro_img, axis=0))
     values, indices= tf.nn.top_k(expanded_img, k=top_k)
