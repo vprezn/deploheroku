@@ -8,18 +8,20 @@ import tensorflow_hub as hub
 from PIL import Image
 #Initialize the flask App
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/": {"origins": ""}})
-# cors = CORS(app)
+# cors = CORS(app, resources={r"/api/": {"origins": ""}})
+cors = CORS(app)
  
 # CORS Headers
-@app.after_request
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    header['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-    header['Access-Control-Allow-Methods'] = 'OPTIONS, HEAD, GET, POST, DELETE, PUT'
-    return response
+# @app.after_request
+# def after_request(response):
+#     header = response.headers
+#     header['Access-Control-Allow-Origin'] = '*'
+#     header['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+#     header['Access-Control-Allow-Methods'] = 'OPTIONS, HEAD, GET, POST, DELETE, PUT'
+#     return response
 
+model_name = "flower_twnsorflow.h5"
+model = tf.keras.models.load_model(model_name ,custom_objects={'KerasLayer':hub.KerasLayer} )
 student_performance_logistic_model = pickle.load(open('student_performance_logistic_model.pkl', 'rb'))
 land_price_prediction_ridge_model = pickle.load(open('land_price_prediction_ridge_model.pkl', 'rb'))
 batch_size = 64
@@ -108,9 +110,7 @@ def predict_land():
 def predict_flower():
     if request.method == "POST":
         im = Image.open(request.files.get('file'))
-        model_name = "flower_twnsorflow.h5"
         image_path = im
-        model = tf.keras.models.load_model(model_name ,custom_objects={'KerasLayer':hub.KerasLayer} )
         top_k = 3
         print("Loaded")
         probs, classes = predict_flower_image(image_path, model, top_k)
