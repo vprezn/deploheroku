@@ -15,7 +15,7 @@ cors = CORS(app, resources={r"/api/": {"origins": ""}})
 def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = '*'
-    header['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,true'
+    header['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
     header['Access-Control-Allow-Methods'] = 'OPTIONS, HEAD, GET, POST, DELETE, PUT'
     return response
 
@@ -106,19 +106,16 @@ def predict_land():
 @app.route('/flower_prediction',methods=['GET','POST'])
 def predict_flower():
     if request.method == "POST":
-        if 'image-f' in request.files:
-            data = request.files['image-f']
-            model_name = "flower_twnsorflow.h5"
-            image_path = data['image']
-            model = tf.keras.models.load_model(model_name ,custom_objects={'KerasLayer':hub.KerasLayer} )
-            top_k = 3
-
-
-            probs, classes = predict_flower_image(image_path, model, top_k)
-            return jsonify({ 
-                'success': True,
-                'data': [probs.classes]
-                })
+         data = request.files['image-f']
+         model_name = "flower_twnsorflow.h5"
+         image_path = data['image']
+         model = tf.keras.models.load_model(model_name ,custom_objects={'KerasLayer':hub.KerasLayer} )
+         top_k = 3
+         probs, classes = predict_flower_image(image_path, model, top_k)
+         return jsonify({ 
+             'success': True,
+             'data': [probs.classes]
+             })
        return jsonify({ 
                'success': True,
                'data': False
