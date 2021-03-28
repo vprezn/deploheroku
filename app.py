@@ -3,6 +3,8 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pickle
 import numpy as np
+import tensorflow as tf
+import tensorflow_hub as hub
 import librosa
 import sklearn
 from PIL import Image
@@ -21,7 +23,14 @@ def after_request(response):
     return response
 
 features_label = np.load('features_label.npy', allow_pickle=True)
+features = []
+for i in range(0, len(features_label)):
+    features.append(np.concatenate((features_label[i][0], features_label[i][1], 
+                features_label[i][2], features_label[i][3],
+                features_label[i][4]), axis=0))
 
+scaler = sklearn.preprocessing.StandardScaler()
+scaler.fit_transform(np.array(features))
 
 student_performance_logistic_model = pickle.load(open('student_performance_logistic_model.pkl', 'rb'))
 land_price_prediction_ridge_model = pickle.load(open('land_price_prediction_ridge_model.pkl', 'rb'))
@@ -114,13 +123,7 @@ def predict_gender():
     if request.method == "POST":
         if 'audio_file' not in request.files:
             return jsonify({'success': True,'data': 'false'})
-        features = []
-        for i in range(0, len(features_label)):
-            features.append(np.concatenate((features_label[i][0], features_label[i][1], 
-                        features_label[i][2], features_label[i][3],
-                        features_label[i][4]), axis=0))
-        scaler = sklearn.preprocessing.StandardScaler()
-        scaler.fit_transform(np.array(features))
+        
         feat = extract_features(request.files.get('audio_file'))
         features = np.concatenate((feat[0], feat[1], feat[2], feat[3],feat[4]), axis=0)
         c = scaler.transform([features])
