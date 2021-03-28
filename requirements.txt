@@ -8,3 +8,4 @@ Flask-Cors==1.10.3
 Pillow
 librosa
 SoundFile
+ 
