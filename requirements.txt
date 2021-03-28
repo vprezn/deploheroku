@@ -7,4 +7,4 @@ sklearn==0.0
 Flask-Cors==1.10.3
 Pillow
 librosa
-sndfile
+sndfile1
