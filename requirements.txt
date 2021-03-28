@@ -5,7 +5,5 @@ numpy==1.17.3
 pickle4==0.0.1
 sklearn==0.0
 Flask-Cors==1.10.3
-tensorflow==2.0.1
-tensorflow-hub
 Pillow
 librosa==0.8.0
