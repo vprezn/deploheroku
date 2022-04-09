@@ -30,6 +30,7 @@ student_performance_logistic_model = pickle.load(open('student_performance_logis
 land_price_prediction_ridge_model = pickle.load(open('land_price_prediction_ridge_model.pkl', 'rb'))
 randomeforest_model = pickle.load(open('randomforest_model.pkl', 'rb'))
 # model = load_model('keras_model.h5')
+model = ""
 batch_size = 64
 image_size = 224
 
