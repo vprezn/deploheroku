@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import pickle
 import numpy as np
-import cv2
+# import cv2
 # import tensorflow as tf
 # import tensorflow_hub as hub
 import librosa
