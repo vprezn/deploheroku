@@ -4,7 +4,6 @@ from flask_cors import CORS
 import pickle
 import numpy as np
 import cv2
-from keras.models import load_model
 # import tensorflow as tf
 # import tensorflow_hub as hub
 import librosa
@@ -30,7 +29,7 @@ def after_request(response):
 student_performance_logistic_model = pickle.load(open('student_performance_logistic_model.pkl', 'rb'))
 land_price_prediction_ridge_model = pickle.load(open('land_price_prediction_ridge_model.pkl', 'rb'))
 randomeforest_model = pickle.load(open('randomforest_model.pkl', 'rb'))
-model = load_model('keras_model.h5')
+# model = load_model('keras_model.h5')
 batch_size = 64
 image_size = 224
 
